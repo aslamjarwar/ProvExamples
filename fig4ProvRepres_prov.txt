@@ -1,0 +1,49 @@
+document
+  prefix PubT <http://pubt.com>
+  prefix Barsetshire <http://barsetshire-la.com>
+  prefix foaf <http://xmlns.com/foaf/0.1/>
+  
+  bundle Barsetshire:Environment-2
+    default <http://barsetshire-la.com>
+    
+    entity(DCV_Dataset)
+    entity(BarsetshireTransport, [prov:label="Barsetshire Transport"])
+    entity(BarsetshireOthers, [prov:label="Other use case"])
+    activity(Receive, -, -, [prov:type="receive", prov:label="receiving dc version of the data"])
+    activity(TransportProvision, -, -)
+    activity(OtherUse, -, -)
+    used(TransportProvision, DCV_Dataset, -)
+    used(OtherUse, DCV_Dataset, -)
+    wasGeneratedBy(DCV_Dataset, Receive, -)
+    wasGeneratedBy(BarsetshireTransport, TransportProvision, -)
+    wasGeneratedBy(BarsetshireOthers, OtherUse, -)
+  endBundle
+  bundle PubT:Environment-1
+    default <http://pubt.com>
+    prefix PubT <http://pubt.com>
+    prefix dn <http://barsetshire-la.com>
+    
+    entity(PubT:CPD, [prov:label="customer personal data", prov:type='prov:Collection'])
+    entity(c1, [prov:label="Perosnal record of customer c1"])
+    entity(c2)
+    entity(c3)
+    entity(c4)
+    entity(cn)
+    hadMember(PubT:CPD, c1)
+    hadMember(PubT:CPD, c2)
+    hadMember(PubT:CPD, c3)
+    hadMember(PubT:CPD, c4)
+    hadMember(PubT:CPD, cn)
+    entity(DCV_Dataset, [prov:label="disclosure-controlled version of the data"])
+    activity(DataProc, 2020-11-16T03:20:05.094556, 2020-11-17T03:20:05.094556, [prov:type="data processing"])
+    activity(Share, 2020-11-18T03:20:05.094556, 2020-11-19T03:20:05.094556, [prov:type="Sharing disclosure-controlled version of the data with Barsetshire"])
+    agent(derek, [prov:type="Person", foaf:givenName="Derek", foaf:mbox="<mailto:derek@example.org>"])
+    agent(bob, [prov:type="Person", foaf:givenName="Bob", foaf:mbox="<mailto:bob@example.org>"])
+    used(DataProc, PubT:CPD, -)
+    used(Share, DCV_Dataset, -)
+    wasGeneratedBy(DCV_Dataset, DataProc, -)
+    wasAssociatedWith(DataProc, derek, -)
+    wasAssociatedWith(Share, bob, -)
+    wasInformedBy(dn:Receive, Share)
+  endBundle
+endDocument
